@@ -1,9 +1,91 @@
+"use client";
 
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
-const Navbar = () => {
+ const Navbar=()=> {
+  const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Studio", path: "/studio" },
+    { name: "SaaS", path: "/saas" },
+    { name: "Blogs", path: "/blogs" },
+    { name: "Careers", path: "/careers" },
+    { name: "Contact", path: "/contact" },
+  ];
+
   return (
-    <div>Navbar</div>
-  )
-}
+    <header className=" top-0 left-0 w-full bg-white backdrop-blur-md border-b border-gray-800 shadow-[0_0_15px_#0BA57F22] z-50">
+      <nav className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+        
+        {/* Logo Section */}
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src="/logo.png"
+            alt="Venturemond Logo"
+            width={80}
+            height={80}
+            priority
+            className="object-contain"
+          />
+          
+        </Link>
 
-export default Navbar
+        {/* Desktop Navigation */}
+        <ul className="hidden md:flex gap-8 text-black text-sm font-medium">
+          {navLinks.map((link) => (
+            <li key={link.path}>
+              <Link
+                href={link.path}
+                className={`relative pb-1 transition duration-200 hover:text-[#0BA57F] ${
+                  pathname === link.path ? "text-[#0BA57F]" : ""
+                }`}
+              >
+                {link.name}
+                {pathname === link.path && (
+                  <span className="absolute left-0 -bottom-[2px] h-[2px] w-full bg-[#0BA57F] rounded-full"></span>
+                )}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-black"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
+
+        {/* Mobile Dropdown */}
+        {menuOpen && (
+          <div className="absolute top-16 right-4 bg-[#111111] border border-gray-800 rounded-lg p-4 shadow-lg md:hidden">
+            <ul className="flex flex-col gap-3 text-sm">
+              {navLinks.map((link) => (
+                <li key={link.path}>
+                  <Link
+                    href={link.path}
+                    onClick={() => setMenuOpen(false)}
+                    className={`block hover:text-[#0BA57F] ${
+                      pathname === link.path
+                        ? "text-[#0BA57F] font-semibold"
+                        : "text-gray-300"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </nav>
+    </header>
+  );
+}
+export default Navbar;
