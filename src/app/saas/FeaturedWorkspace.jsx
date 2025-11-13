@@ -58,7 +58,7 @@ const FeaturedWorkspace = () => {
             ))}
           </ul>
 
-          {/* CTAs */}
+         
           <div className="flex flex-col text-center justify-center sm:flex-row gap-5 mt-10">
             <Link
               href="/workspace-waitlist"
