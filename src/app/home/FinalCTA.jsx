@@ -13,7 +13,7 @@ const FinalCTA = () => {
         transition={{ duration: 0.8 }}
         className="max-w-4xl mx-auto space-y-8"
       >
-        <h2 className="heading font-bold leading-snug">
+        <h2 className="heading font-bold leading-snug ">
           Ready to <span className="text-[#0BA57F]">Build the Future?</span>
         </h2>
 

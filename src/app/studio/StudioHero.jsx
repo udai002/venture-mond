@@ -16,7 +16,7 @@ const processSteps = [
 
 const StudioHero = () => {
   return (
-    <section className="relative flex flex-col items-center justify-center text-center min-h-[90vh] bg-[#0B0B0B] text-white overflow-hidden px-6 md:px-16 md:pt-10 sm:pt-6 ">
+    <section className="relative flex flex-col items-center justify-center text-center min-h-[90vh] bg-[#0B0B0B] text-white overflow-hidden px-6 md:px-16 md:pt-10 pt-6 ">
      
 
       

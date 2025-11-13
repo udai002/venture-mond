@@ -1,4 +1,5 @@
 import AboutStudio from "./AboutStudio"
+import FinalStudioCTA from "./FinalStudioCTA"
 import FourPillars from "./FourPillars"
 import Hero from "./StudioHero"
 import StudioProcess from "./StudioProcess"
@@ -13,6 +14,7 @@ const Studio = () => {
       <FourPillars/>
       <StudioProcess/>
       <WhyChoose/>
+      <FinalStudioCTA/>
     </div>
   )
 }
