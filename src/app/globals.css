@@ -20,7 +20,7 @@
 }
 
 .para{
- @apply text-[12px] md:text-[14px] lg:text-[19px]
+ @apply text-[12px] md:text-[14px] lg:text-[18px]
 }
 
 .btn1{

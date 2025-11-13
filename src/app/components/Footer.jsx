@@ -64,7 +64,7 @@ const Footer=()=> {
 
       {/* Bottom Bar */}
       <div className="border-t border-gray-800 text-center py-4 text-xs text-gray-500">
-        © 2025 Venture Mond. All rights reserved.
+        © 2025 Venture Mond. All rights reserved. | Srikanth Devabattula
       </div>
     </footer>
   );
