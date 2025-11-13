@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const AboutTeam = () => {
   return (
     <section className="bg-[#0B0B0B] text-white py-24 px-6 md:px-16">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}

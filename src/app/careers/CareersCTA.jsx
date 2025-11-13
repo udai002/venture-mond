@@ -6,7 +6,6 @@ import Link from "next/link";
 const CareersCTA = () => {
   return (
     <section className="relative bg-[#0B0B0B] text-white py-24 px-6 md:px-16 text-center overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(11,165,127,0.15)_0%,transparent_70%)] -z-10" />
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
