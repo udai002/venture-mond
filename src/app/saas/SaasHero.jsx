@@ -23,10 +23,15 @@ const floatingIcons = [
 
 const SaaSHero = () => {
   return (
-    <section className="relative flex flex-col items-center justify-center text-center min-h-[80vh] bg-[#0B0B0B] text-white overflow-hidden px-6 md:px-16 pt-10">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0BA57F]/10 via-transparent to-[#0B0B0B] -z-10"></div>
-      <div className="absolute w-[400px] h-[400px] bg-[#0BA57F]/10 blur-[150px] rounded-full top-1/3 left-1/2 -translate-x-1/2 -z-10"></div>
+   <section
+  className="relative  min-h-[80vh] bg-[#0B0B0B] text-white overflow-hidden "
+  style={{
+    backgroundImage: "url('/home/bg2.gif')",
+  }}
+>
+  <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-[#0B0B0B]/95 px-6 md:px-16 pt-10 flex flex-col items-center justify-center text-center">
 
+      
       <motion.h1
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -84,6 +89,7 @@ const SaaSHero = () => {
           Join Waitlist
         </Link>
       </motion.div>
+      </div>
     </section>
   );
 };

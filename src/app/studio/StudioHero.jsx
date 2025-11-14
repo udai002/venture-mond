@@ -16,15 +16,20 @@ const processSteps = [
 
 const StudioHero = () => {
   return (
-    <section className="relative flex flex-col items-center justify-center text-center min-h-[90vh] bg-[#0B0B0B] text-white overflow-hidden px-6 md:px-16 md:pt-10 pt-6 ">
-     
-
-      
+ <section
+  className="relative flex flex-col items-center justify-center text-center min-h-[90vh] text-white overflow-hidden bg-cover bg-center bg-no-repeat"
+  style={{
+    backgroundImage: "url('/home/bg1.gif')",
+  }}
+>
+  
+  <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-[#0B0B0B]/95"></div>
+   
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="max-w-4xl mx-auto space-y-6"
+        className="max-w-4xl mx-auto space-y-6  z-10"
       >
         <h1 className="heading font-extrabold leading-tight">
           From <span className="text-[#0BA57F]">Idea</span> to{" "}
@@ -68,7 +73,7 @@ const StudioHero = () => {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ delay: 0.6, duration: 0.8 }}
-        className="flex flex-col sm:flex-row justify-center gap-5 mt-16"
+        className="flex flex-col sm:flex-row justify-center gap-5 mt-16 z-10"
       >
         <Link
           href="/contact?model=studio&type=partner"
@@ -83,6 +88,7 @@ const StudioHero = () => {
           Start a Project
         </Link>
       </motion.div>
+      
     </section>
   );
 };
