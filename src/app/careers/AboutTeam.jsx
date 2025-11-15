@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const AboutTeam = () => {
   return (
     <section className="bg-[#0B0B0B] text-white py-24 px-6 md:px-16">
-      <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div className="flex flex-col justify-center text-center gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -30,11 +30,11 @@ const AboutTeam = () => {
           transition={{ duration: 0.8 }}
           className="relative"
         >
-          <div className="w-full h-64 bg-[#0BA57F]/10 border border-[#0BA57F]/20 rounded-2xl flex items-center justify-center text-[#0BA57F] text-xl font-semibold shadow-[0_0_20px_#0BA57F33]">
+          <div className="w-full    flex items-center justify-center text-[#0BA57F] text-xl font-semibold ">
             💡 Innovative. 
-            <br />
+            
             🤝 Collaborative.
-            <br />
+            
              🚀 Fast-paced.
           </div>
         </motion.div>
