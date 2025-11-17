@@ -58,7 +58,7 @@ const WhyChoose = () => {
           transition={{ delay: 0.3, duration: 0.8 }}
           className="overflow-hidden rounded-2xl border border-gray-800 bg-[#111]"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 bg-[#0BA57F]/10 text-sm md:text-base font-semibold text-[#0BA57F] border-b border-gray-800">
+          <div className="grid grid-cols-2 sm:grid-cols-2 bg-[#0BA57F]/10 text-sm md:text-base font-semibold text-[#0BA57F] border-b border-gray-800">
             <div className="px-6 py-4 border-r border-gray-800">Advantage</div>
             <div className="px-6 py-4">Description</div>
           </div>
@@ -66,7 +66,7 @@ const WhyChoose = () => {
           {advantages.map((item, index) => (
             <div
               key={index}
-              className="grid grid-cols-1 sm:grid-cols-2 border-b border-gray-800 last:border-none hover:bg-[#0BA57F]/5 transition-all duration-300"
+              className="grid grid-cols-2 sm:grid-cols-2 border-b border-gray-800 last:border-none hover:bg-[#0BA57F]/5 transition-all duration-300"
             >
               <div className="flex items-center gap-3 px-6 md:py-5 py-2 border-r border-gray-800">
                 <div className="text-xl">{item.icon}</div>

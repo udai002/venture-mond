@@ -20,10 +20,10 @@ const CareersCTA = () => {
           Let’s create what’s next — together.
         </p>
         <a
-          href="mailto:hello@venturemond.com"
+          href="mailto:career@venturemond.com"
           className="inline-block px-8 py-3 bg-[#0BA57F] text-black font-semibold rounded-full hover:bg-[#09c08f] transition duration-300"
         >
-          Apply Now → hello@venturemond.com
+          Apply Now → career@venturemond.com
         </a>
       </motion.div>
     </section>

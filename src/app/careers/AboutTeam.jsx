@@ -30,12 +30,12 @@ const AboutTeam = () => {
           transition={{ duration: 0.8 }}
           className="relative"
         >
-          <div className="w-full    flex items-center justify-center text-[#0BA57F] text-xl font-semibold ">
-            💡 Innovative. 
+          <div className="w-full gap-3 flex flex-col sm:flex-row items-center justify-center text-[#0BA57F] text-xl font-semibold ">
+            <p>💡 Innovative. </p>
             
-            🤝 Collaborative.
+            <p>🤝 Collaborative.</p>
             
-             🚀 Fast-paced.
+             <p>🚀 Fast-paced.</p>
           </div>
         </motion.div>
       </div>

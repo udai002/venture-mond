@@ -29,7 +29,7 @@ const ApplicationProcess = () => {
 
         <div className="flex flex-col sm:flex-row justify-center gap-6 text-[#0BA57F] text-lg font-semibold mt-10">
           <a href="mailto:hello@venturemond.com" className="flex items-center gap-2 hover:underline">
-            <EmailIcon /> hello@venturemond.com
+            <EmailIcon /> career@venturemond.com
           </a>
           <a
             href="https://www.linkedin.com/company/venturemond"

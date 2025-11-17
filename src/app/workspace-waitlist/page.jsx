@@ -13,14 +13,35 @@ const WorkspaceWaitlist = () => {
     teamSize: "",
     interest: "",
   });
+  const [formError , setFormError] = useState("")
+  const [loading , setLoading] = useState("")
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!formData.name || !formData.email){
+      setFormError("Please Enter Required details")
+      return ;
+    }
+    setFormError("")
     setSubmitted(true);
+    try{
+      setLoading(true)
+      const response = await fetch('/api/saas-email' ,  {
+        method:"POST" , 
+        headers:{
+          "content-type":"application/json"
+        } , 
+        body:JSON.stringify(formData)
+      })
+    }catch(error){
+      setFormError("Something went wrong! please try again")
+      console.log("Error in submiting data" , error)
+    }
+    setLoading(false)
   };
 
   return (
@@ -117,11 +138,14 @@ const WorkspaceWaitlist = () => {
               />
             </div>
 
+            {formError && <p>{formError}</p>}
+
             <button
               type="submit"
               className="btn1"
+              disabled={loading}
             >
-              Join Waitlist
+              {loading?"joining..." :"Join Waitlist"}
             </button>
           </form>
         </motion.div>

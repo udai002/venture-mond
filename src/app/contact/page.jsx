@@ -3,8 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import emailjs from "@emailjs/browser";
-
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -13,10 +11,6 @@ import CallIcon from "@mui/icons-material/Call";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-
-// ------------------------
-//  REUSABLE CHECKBOX DROPDOWN
-// ------------------------
 const CheckboxDropdown = ({ label, options, selected, setSelected }) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef();
@@ -79,10 +73,6 @@ const CheckboxDropdown = ({ label, options, selected, setSelected }) => {
 };
 
 
-
-// ------------------------
-//  MAIN PAGE
-// ------------------------
 const ContactPage = () => {
   const [divisionOptions] = useState([
     "Venturemond Studio — Build a product or startup with us",
@@ -93,10 +83,23 @@ const ContactPage = () => {
   const [serviceOptions, setServiceOptions] = useState([]);
   const [selectedService, setSelectedService] = useState([]);
   const [submited, setSubmited] = useState(true);
+  const [loading , setLoading] = useState(false)
+  const [error , setError]  = useState("")
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    description: "",
+    budget: "",
+    timeline: "",
+    division: "",
+    service: "",
+  });
 
   const formRef = useRef();
 
-  // Update services based on selected division
+  // Update service list based on division
   useEffect(() => {
     let services = [];
 
@@ -117,33 +120,53 @@ const ContactPage = () => {
     setSelectedService([]);
   }, [division]);
 
+  // Update formData when division changes
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      division: division.join(", "),
+    }));
+  }, [division]);
 
+  // Update formData when services change
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      service: selectedService.join(", "),
+    }));
+  }, [selectedService]);
 
-  // ------------------------
-  //  SEND EMAIL VIA EMAILJS
-  // ------------------------
-  const sendEmail = (e) => {
-    e.preventDefault();
-
-    emailjs
-      .sendForm(
-        "service_3t83pso",       // ← ADD YOUR SERVICE ID
-        "template_9f8xqap",      // ← ADD YOUR TEMPLATE ID
-        formRef.current,
-        "-OjTa6Sh2CH1c3Tla"        // ← ADD YOUR PUBLIC KEY
-      )
-      .then(
-        () => {
-          setSubmited(false);
-        },
-        (error) => {
-          console.log("FAILED...", error);
-          alert("Something went wrong while sending the message.");
-        }
-      );
+  // Generic input handler
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-
+  const sendEmail = async (e) => {
+    e.preventDefault();
+    if(!formData.email && !formData.name && !formData.service ){
+      setError("Please fill the required details")
+      return ;
+    }
+    
+    setError("")
+    console.log("Submitted Form Data:", formData);
+    try{
+      setLoading(true)
+      const response = await fetch("/api/email" , {
+        method:"POST" , 
+        headers:{
+          "content-type":"application/json"
+        }, 
+        body:JSON.stringify(formData)
+      })
+      setLoading(false)
+      setSubmited(false)
+    }catch(error){
+      setError("Something went wrong! please try again")
+      console.log("Error in sending email..." , error)
+    }
+  };
 
   return (
     <section className="bg-[#0B0B0B] text-white py-24 px-6 md:px-16">
@@ -162,24 +185,25 @@ const ContactPage = () => {
       </motion.div>
 
       <div className="grid md:grid-cols-2 gap-16 max-w-6xl mx-auto">
+        
+        {/* LEFT FORM */}
         <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-          
-          <h2 className="text-lg md:text-xl font-semibold mb-3">
-            Tell us what you’d like to build.
-          </h2>
+          <h2 className="text-lg md:text-xl font-semibold mb-3">Tell us what you’d like to build.</h2>
 
           {submited ? (
             <form ref={formRef} onSubmit={sendEmail} className="space-y-4 text-gray-300">
-              
+
               {/* NAME */}
               <div>
                 <label className="block mb-2 font-medium">Name*</label>
                 <input
                   type="text"
                   name="name"
-                  placeholder="Your full name"
+                  value={formData.name}
+                  onChange={onChangeInput}
                   required
-                  className="w-full bg-[#111111] border border-[#0BA57F]/20 rounded-lg p-3 focus:outline-none focus:border-[#0BA57F]"
+                  placeholder="Your full name"
+                  className="w-full bg-[#111111] border border-[#0BA57F]/20 rounded-lg p-3"
                 />
               </div>
 
@@ -189,25 +213,28 @@ const ContactPage = () => {
                 <input
                   type="email"
                   name="email"
-                  placeholder="your@email.com"
+                  value={formData.email}
+                  onChange={onChangeInput}
                   required
-                  className="w-full bg-[#111111] border border-[#0BA57F]/20 rounded-lg p-3 focus:outline-none focus:border-[#0BA57F]"
+                  placeholder="your@email.com"
+                  className="w-full bg-[#111111] border border-[#0BA57F]/20 rounded-lg p-3"
                 />
               </div>
 
               {/* COMPANY */}
               <div>
-                <label className="block mb-2 font-medium">Company / Startup Name (optional)</label>
+                <label className="block mb-2 font-medium">Company / Startup Name</label>
                 <input
                   type="text"
                   name="company"
+                  value={formData.company}
+                  onChange={onChangeInput}
                   placeholder="e.g. Alpha Tech Pvt. Ltd."
                   className="w-full bg-[#111111] border border-[#0BA57F]/20 rounded-lg p-3"
                 />
               </div>
 
-
-              {/* MULTI SELECT 1 */}
+              {/* DIVISION */}
               <CheckboxDropdown
                 label="What are you interested in?*"
                 options={divisionOptions}
@@ -215,7 +242,7 @@ const ContactPage = () => {
                 setSelected={setDivision}
               />
 
-              {/* MULTI SELECT 2 */}
+              {/* SERVICES */}
               <CheckboxDropdown
                 label="Choose a Service*"
                 options={serviceOptions}
@@ -223,35 +250,33 @@ const ContactPage = () => {
                 setSelected={setSelectedService}
               />
 
-              {/* Hidden Inputs for Multi-Select Values */}
-              <input type="hidden" name="division" value={division.join(", ")} />
-              <input type="hidden" name="services" value={selectedService.join(", ")} />
-
-
-              {/* PROJECT DESCRIPTION */}
+              {/* DESCRIPTION */}
               <div>
                 <label className="block mb-2 font-medium">Brief About Your Project*</label>
                 <textarea
-                  name="project"
+                  name="description"
                   rows={4}
                   required
+                  value={formData.description}
+                  onChange={onChangeInput}
                   placeholder="Tell us about your idea..."
                   className="w-full bg-[#111111] border border-[#0BA57F]/20 rounded-lg p-3"
                 ></textarea>
               </div>
 
-
               {/* BUDGET + TIMELINE */}
               <div className="grid md:grid-cols-2 gap-6">
+                
                 <div>
                   <label className="block mb-2 font-medium">Budget Range*</label>
                   <select
                     name="budget"
                     required
-                    defaultValue=""
+                    value={formData.budget}
+                    onChange={onChangeInput}
                     className="w-full bg-[#111111] border border-[#0BA57F]/20 rounded-lg p-3"
                   >
-                    <option value="" disabled hidden>Select Budget Range</option>
+                    <option value="" disabled>Select Budget Range</option>
                     <option>Under ₹2 Lakhs / $2,500</option>
                     <option>₹2–5 Lakhs / $2,500–$6,000</option>
                     <option>₹5–10 Lakhs / $6,000–$12,000</option>
@@ -264,22 +289,22 @@ const ContactPage = () => {
                   <select
                     name="timeline"
                     required
-                    defaultValue=""
+                    value={formData.timeline}
+                    onChange={onChangeInput}
                     className="w-full bg-[#111111] border border-[#0BA57F]/20 rounded-lg p-3"
                   >
-                    <option value="" disabled hidden>Select Time Frame</option>
+                    <option value="" disabled>Select Time Frame</option>
                     <option>Immediately</option>
                     <option>Within 1 month</option>
                     <option>In 2–3 months</option>
                     <option>Exploring for now</option>
                   </select>
                 </div>
+
               </div>
-
-
-              {/* SUBMIT */}
-              <button type="submit" className="btn1">
-                Submit Inquiry
+               {error && <p className="text-red-700">{error}</p>} 
+              <button type="submit" className="btn1" disabled={loading}>
+                {loading ? "Submiting...":"Submit Inquiry"}
               </button>
             </form>
           ) : (
@@ -289,16 +314,8 @@ const ContactPage = () => {
           )}
         </motion.div>
 
-
-
-
-        {/* RIGHT SIDE CONTACT INFO */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="space-y-6"
-        >
+        {/* RIGHT CONTACT INFO */}
+        <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
           <h2 className="heading font-semibold mb-4">Get in touch</h2>
 
           <div className="space-y-4 para text-gray-300">
@@ -307,7 +324,7 @@ const ContactPage = () => {
             </p>
 
             <p className="flex items-center gap-3">
-              <LocationOnIcon className="text-[#0BA57F]" /> 
+              <LocationOnIcon className="text-[#0BA57F]" />
               4th Floor, Bizness Square, Hitec City, Hyderabad – 500084
             </p>
 
@@ -321,8 +338,7 @@ const ContactPage = () => {
         </motion.div>
       </div>
 
-
-      {/* FOOTER CONTACT */}
+      {/* FOOTER */}
       <div className="text-center mt-24 space-y-3">
         <h3 className="text-xl font-bold text-[#0BA57F]">Want to talk directly?</h3>
         <p className="text-gray-300 para">Reach out to our Team</p>
